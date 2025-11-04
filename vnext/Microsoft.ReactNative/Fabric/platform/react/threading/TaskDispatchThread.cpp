@@ -98,12 +98,9 @@ TaskDispatchThread::Impl::~Impl() noexcept {
 }
 
 void TaskDispatchThread::Impl::start() noexcept {
-  std::promise<void> promise;
-  thread_ = std::thread([this, &promise]() {
-    promise.set_value();
+  thread_ = std::thread([this]() {
     loop();
   });
-  promise.get_future().wait();
 }
 
 bool TaskDispatchThread::Impl::isOnThread() noexcept {
